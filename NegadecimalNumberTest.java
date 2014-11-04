@@ -6,12 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class NegadecimalNumberTest {
+	NegadecimalNumber ndn1 = new NegadecimalNumber(52865);
+	NegadecimalNumber ndn2 = new NegadecimalNumber(-4280);
+	NegadecimalNumber ndn3 = new NegadecimalNumber("68945");
 
 	@Before
-	public void setUp() throws Exception {
-		NegadecimalNumber ndn1 = new NegadecimalNumber(52865);
-		NegadecimalNumber ndn2 = new NegadecimalNumber(-4280);
-		
+	public void setUp() throws Exception {		
 	}
 
 	@Test
@@ -22,7 +22,16 @@ public class NegadecimalNumberTest {
 		NegadecimalNumber ndn3 = new NegadecimalNumber("1326");
 		assertEquals(-714, ndn3.decnum);
 		assertEquals("1326",ndn3.negDN);
-	}
+		try {
+			NegadecimalNumber ndn4 = new NegadecimalNumber("");
+					}
+		catch (IllegalArgumentException e){
+			
+		}
+			
+		}
+		
+	
 
 	@Test
 	public void testNegadecimalNumberInt() {
@@ -75,8 +84,8 @@ public class NegadecimalNumberTest {
 
 	@Test
 	public void testEqualsNegadecimalNumber() {
-		assertTrue(ndn2.equals(ndn1));
-		fail("Not yet implemented");
+		assertFalse(ndn2.equals(ndn1));
+		assertTrue(ndn3.equals(ndn1));
 	}
 
 	@Test
