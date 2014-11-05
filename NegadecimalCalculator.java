@@ -9,11 +9,15 @@ public class NegadecimalCalculator {
 	
 	public static void main(String[] args) {
 		NegadecimalCalculator thisCalculator = new NegadecimalCalculator();
+		thisCalculator.printDisplay();
 		thisCalculator.REPL();
 	}
 	public void setCurrentNDN(NegadecimalNumber ndn) {
 		currentNDN = ndn;
 		return;
+	}
+	public void printDisplay() {
+		System.out.println("Display: " + display);
 	}
 	public NegadecimalNumber doArithmetic(char operator, NegadecimalNumber ndn) {
 		//does appropriate arithmetic and returns the NDN answer
@@ -38,21 +42,25 @@ public class NegadecimalCalculator {
 	public void REPL() {
 		while (true) {
 			String command = this.getInput();	//takes user input string
-			String result = this.evaluate(command);	//evaluates command and prints result
-			if (result == "Quit calculator.") break;
-			System.out.println(result);
+			display = this.evaluate(command);	//evaluates command and prints result
+			if (display == "Quit calculator.") break;
+			printDisplay();
 		}
 		return;
 	}
 
 	public int findOperatorIndex(String s) {
-		int i = 0;
 		char operator = ' ';
-		while (operator == ' ') {			//keeps looking through string until finds non-space
+		for (int i=0; i < s.length(); i++){	//keeps looking through string until finds non-space
 			operator = s.charAt(i);
-			i++;
+			if (operator != ' ') {
+				return i;
+			}
 		}
-		return i;
+		if (operator == ' ') {
+			throw new IllegalArgumentException();
+		}
+		return -1;
 	}
 
 	public boolean badInputForSimple(String s, int index) {
@@ -63,7 +71,10 @@ public class NegadecimalCalculator {
 		
 	public String getInput() {
 		Scanner scanner = new Scanner(System.in);
+		System.out.println("Valid commands are: +, -, *, /, %, ~, ?, decimal, clear and quit." +
+				"\nOr you can enter a negadecimal number directly.\nEnter a command: ");
 		return scanner.next();
+		
 	}
 
 	public String doDecimalInteger(String s, int index, String restOfInput) {
@@ -80,7 +91,13 @@ public class NegadecimalCalculator {
 	}
 
 	public String evaluate(String s) {
-		int operatorIndex = findOperatorIndex(s);	//finds first non-space character
+		int operatorIndex = 0;
+		try {
+			operatorIndex = findOperatorIndex(s);	//finds first non-space character
+		} catch (IllegalArgumentException e) {
+			return "Must enter something!";
+		}
+			
 		char operator = s.charAt(operatorIndex);
 		String restOfInput = s.substring(operatorIndex + 1);
 
@@ -100,7 +117,7 @@ public class NegadecimalCalculator {
 		//and redisplays ndn
 		if (operator == '?') {
 			if (badInputForSimple(s, operatorIndex)) return "Error";
-			return currentNDN.negDN + "(decimal " + currentNDN.decnum + ")";
+			return currentNDN.negDN + " (decimal " + currentNDN.decnum + ")";
 		}
 
 		//replaces # in display with the negadecimal
