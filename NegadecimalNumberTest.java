@@ -6,12 +6,22 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class NegadecimalNumberTest {
-	NegadecimalNumber ndn1 = new NegadecimalNumber(52865);
-	NegadecimalNumber ndn2 = new NegadecimalNumber(-4280);
-	NegadecimalNumber ndn3 = new NegadecimalNumber("68945");
+	NegadecimalNumber ndn1;
+	NegadecimalNumber ndn2;
+	NegadecimalNumber ndn3;
+	NegadecimalNumber small;
+	NegadecimalNumber big;
+	NegadecimalNumber answer;
+	
 
 	@Before
-	public void setUp() throws Exception {		
+	public void setUp() {	
+		ndn1 = new NegadecimalNumber(52865);
+		ndn2 = new NegadecimalNumber(-4280);
+		ndn3 = new NegadecimalNumber("68945");
+		small = new NegadecimalNumber(65);
+		big = new NegadecimalNumber(400);
+		answer = new NegadecimalNumber(0);
 	}
 
 	@Test
@@ -46,34 +56,43 @@ public class NegadecimalNumberTest {
 
 	@Test
 	public void testAdd() {
-		NegadecimalNumber ndn1 = new NegadecimalNumber(52865);
-		NegadecimalNumber ndn2 = new NegadecimalNumber(-4280);
 		assertEquals(48585, (ndn1.add(ndn2)).decnum);
+		
+		answer = new NegadecimalNumber(48585);
+		assertTrue(answer.equals(ndn1.add(ndn2)));
+		
+		answer = new NegadecimalNumber(465);
+		assertTrue(answer.equals(small.add(big)));
 	}
 
 	@Test
 	public void testSubtract() {
-		fail("Not yet implemented");
+		answer = new NegadecimalNumber(335);
+		assertTrue(answer.equals(big.subtract(small)));
 	}
 
 	@Test
 	public void testMultiply() {
-		fail("Not yet implemented");
+		answer = new NegadecimalNumber(26000);
+		assertTrue(answer.equals(small.multiply(big)));
 	}
 
 	@Test
 	public void testDivide() {
-		fail("Not yet implemented");
+		answer = new NegadecimalNumber(6);
+		assertTrue(answer.equals(big.divide(small)));
 	}
 
 	@Test
 	public void testRemainder() {
-		fail("Not yet implemented");
+		answer = new NegadecimalNumber(10);
+		assertTrue(answer.equals(big.remainder(small)));
 	}
 
 	@Test
 	public void testNegate() {
-		fail("Not yet implemented");
+		answer = new NegadecimalNumber(-400);
+		assertTrue(answer.equals(big.negate()));
 	}
 
 	@Test
@@ -90,7 +109,8 @@ public class NegadecimalNumberTest {
 
 	@Test
 	public void testToString() {
-		fail("Not yet implemented");
+		answer = new NegadecimalNumber(345);
+		assertEquals("465", answer.toString());
 	}
 
 }
