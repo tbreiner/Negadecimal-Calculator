@@ -93,6 +93,9 @@ public class NegadecimalNumberTest {
 	public void testNegate() {
 		answer = new NegadecimalNumber(-400);
 		assertTrue(answer.equals(big.negate()));
+		
+		NegadecimalNumber negated = new NegadecimalNumber(400);
+		assertTrue(negated.equals(answer.negate()));
 	}
 
 	@Test
