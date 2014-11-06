@@ -49,7 +49,7 @@ public class NegadecimalCalculator {
 		return;
 	}
 
-	public int findOperatorIndex(String s) {
+	/*public int findOperatorIndex(String s) {
 		char operator = ' ';
 		for (int i=0; i < s.length(); i++){	//keeps looking through string until finds non-space
 			operator = s.charAt(i);
@@ -62,45 +62,47 @@ public class NegadecimalCalculator {
 		}
 		return -1;
 	}
-
-	public boolean badInputForSimple(String s, int index) {
+	*/
+/*
+	public boolean badInputForSimple(String s) {
+		//makes sure that there is no excess input after ?, ~, or ndn
 		String afterOperator = s.substring(index + 1); 	//saves string after operator
 		return (afterOperator.length() != 0);
 	}
-		
+	*/	
 		
 	public String getInput() {
-		Scanner scanner = new Scanner(System.in);
+		Scanner keyboard = new Scanner(System.in);
 		System.out.println("Valid commands are: +, -, *, /, %, ~, ?, decimal, clear and quit." +
 				"\nOr you can enter a negadecimal number directly.\nEnter a command: ");
-		return scanner.next();
-		
+		String line = keyboard.nextLine();
+		if (line.isEmpty()) {
+			this.getInput();
+		}
+		return line;
 	}
 
-	public String doDecimalInteger(String s, int index, String restOfInput) {
-		if (restOfInput.substring(0, 5) == "ecimal") {
-				index += 6;
+	public String doDecimalInteger(String restOfInput) {
+		restOfInput = restOfInput.trim();
+		if (restOfInput.isEmpty()) return "Error";
+		if (restOfInput.length() >= 6) {
+			if ("ecimal".equals(restOfInput.substring(0, 6))) {
+				restOfInput = restOfInput.substring(6);
+				restOfInput = restOfInput.trim();
 			}
-			try {
-				int operand = Integer.parseInt(findSecondOperand(s));
-				currentNDN = new NegadecimalNumber(operand);
-			} catch (IllegalArgumentException e) {
-				return "Error";
-			}
-			return currentNDN.negDN;
+		}
+		try {
+			int operand = Integer.parseInt(restOfInput);
+			currentNDN = new NegadecimalNumber(operand);
+		} catch (IllegalArgumentException e) {
+			return "Error";
+		}
+		return currentNDN.negDN;
 	}
 
 	public String evaluate(String s) {
-		int operatorIndex = 0;
-		try {
-			operatorIndex = findOperatorIndex(s);	//finds first non-space character
-		} catch (IllegalArgumentException e) {
-			return "Must enter something!";
-		}
-			
-		char operator = s.charAt(operatorIndex);
-		String restOfInput = s.substring(operatorIndex + 1);
-
+		char operator = s.charAt(0);
+		String restOfInput = s.substring(1);
 		
 		//replaces display with this new ndn
 		if (Character.isDigit(operator)) {
@@ -116,19 +118,19 @@ public class NegadecimalCalculator {
 		//shows decimal value of displayed ndn
 		//and redisplays ndn
 		if (operator == '?') {
-			if (badInputForSimple(s, operatorIndex)) return "Error";
+			if (!restOfInput.isEmpty()) return "Error";
 			return currentNDN.negDN + " (decimal " + currentNDN.decnum + ")";
 		}
 
 		//replaces # in display with the negadecimal
 		//equivalent of the user's dec number
 		if (operator == 'd') {
-			return doDecimalInteger(s, operatorIndex, restOfInput);
+			return doDecimalInteger(restOfInput);
 			}
 
 		//clears errors and replaces display with 0
 		if (operator == 'c') {
-			if (restOfInput != "" && restOfInput != "lear") {
+			if (!restOfInput.isEmpty() && !"lear".equals(restOfInput)) {
 				return "Error";
 			}
 			currentNDN = new NegadecimalNumber(0);
@@ -137,7 +139,7 @@ public class NegadecimalCalculator {
 
 		//quits program
 		if (operator == 'q') {
-			if (restOfInput != "" && restOfInput != "uit") {
+			if (!restOfInput.isEmpty() && !"uit".equals(restOfInput)) {
 				return "Error";
 			}
 			return "Quit calculator.";
@@ -145,9 +147,7 @@ public class NegadecimalCalculator {
 
 		//computes the negative of the display
 		if (operator == '~') {
-			if (badInputForSimple(s, operatorIndex)) {
-				return "Error";
-			}
+			if (!restOfInput.isEmpty()) return "Error";
 			currentNDN = currentNDN.negate();	//negates and updates currentNDN
 			return currentNDN.negDN;			//returns string version to print
 		}
