@@ -76,6 +76,7 @@ public class NegadecimalCalculator {
 		
 	public String getInput() {
 		Scanner keyboard = new Scanner(System.in);
+<<<<<<< HEAD
 		System.out.println("Valid commands are: +, -, *, /, %, followed by a negadecimal number.\n" +
 				"~ : gets the negation of current negadecimal number in display \n?: gets " +
 				"value of current number \ndecimal XX: inputs a decimal number to be converted to " +
@@ -89,6 +90,13 @@ public class NegadecimalCalculator {
 		if (display == "Error" && !line.equalsIgnoreCase("c") && !line.equalsIgnoreCase("clear")) {
 			System.out.println("You must enter a 'Clear' command to clear the display\n");
 			getInput();
+=======
+		System.out.println("Valid commands are: +, -, *, /, %, ~, ?, decimal, clear and quit." +
+				"\nOr you can enter a negadecimal number directly.\nEnter a command: ");
+		String line = keyboard.nextLine();
+		if (line.isEmpty()) {
+			this.getInput();
+>>>>>>> FETCH_HEAD
 		}
 		return line;
 	}
@@ -112,9 +120,14 @@ public class NegadecimalCalculator {
 	}
 
 	public String evaluate(String s) {
+<<<<<<< HEAD
 		s.trim();
 		char operator = s.charAt(0);//get first character of input string to identify operation
 		String restOfInput = s.substring(1);// everything following first character is considered operand
+=======
+		char operator = s.charAt(0);
+		String restOfInput = s.substring(1);
+>>>>>>> FETCH_HEAD
 		
 		//if input is only numeric, replaces display with this new ndn
 		if (Character.isDigit(operator)) {
@@ -141,8 +154,13 @@ public class NegadecimalCalculator {
 			}
 
 		//clears errors and replaces display with 0
+<<<<<<< HEAD
 		if ((operator == 'c')||( operator == 'C')) {
 			if (!restOfInput.isEmpty() && !"lear".equalsIgnoreCase(restOfInput)) {
+=======
+		if (operator == 'c') {
+			if (!restOfInput.isEmpty() && !"lear".equals(restOfInput)) {
+>>>>>>> FETCH_HEAD
 				return "Error";
 			}else{
 				currentNDN = new NegadecimalNumber("0");
