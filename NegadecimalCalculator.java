@@ -11,16 +11,15 @@ public class NegadecimalCalculator {
 	NegadecimalNumber currentNDN = new NegadecimalNumber(0);
 	
 	public static void main(String[] args) {
+		System.out.println((-25) / (-4280));
 		NegadecimalCalculator thisCalculator = new NegadecimalCalculator();
 		thisCalculator.REPL();
 	}
-	public void setCurrentNDN(NegadecimalNumber ndn) {
-		currentNDN = ndn;
-		return;
-	}
+	
 	public void printDisplay() {
 		System.out.println("Display: " + display + "\n");
 	}
+	
 	public NegadecimalNumber doArithmetic(char operator, NegadecimalNumber ndn) {
 		//does appropriate arithmetic and returns the NDN answer
 		if (operator == '+') return currentNDN.add(ndn);
@@ -66,10 +65,11 @@ public class NegadecimalCalculator {
 	public String doDecimalInteger(String restOfInput) {
 		if (restOfInput.isEmpty()) return "Error";
 		if (restOfInput.length() >= 6) {
-			if ("ecimal".equals(restOfInput.substring(0, 6))) {
+			if ("ecimal".equalsIgnoreCase(restOfInput.substring(0, 6))) {
 				restOfInput = restOfInput.substring(6);
 			}
 		restOfInput = restOfInput.trim();
+		restOfInput = cleanUpNumber(restOfInput);
 		}
 		try {
 			int operand = Integer.parseInt(restOfInput);
@@ -81,21 +81,20 @@ public class NegadecimalCalculator {
 	}
 	public String evaluate(String s) {
 		s = s.trim();
-		if (s.length() <= 0) {
-			return "Error";
-		}
+		if (s.length() <= 0) return "Error";
 		char operator = s.charAt(0);//get first character of input string to identify operation
 		String restOfInput = s.substring(1);// everything following first character is considered operand
+		restOfInput = restOfInput.trim();
 		
 		//if input is only numeric, replaces display with this new ndn
 		if (Character.isDigit(operator)) {
+			s = cleanUpNumber(s);
 			try {
-				NegadecimalNumber inputNDN = new NegadecimalNumber(s);
-				currentNDN = inputNDN;	//updates global currentNDN
+				currentNDN = new NegadecimalNumber(s); //updates global currentNDN
 			} catch (IllegalArgumentException e) {
 				return "Error";
 			}
-			return cleanUpNumber(currentNDN.negDN);	//returns string version of NDN to print
+			return currentNDN.negDN;	//returns string version of NDN to print
 		}
 
 		//shows decimal value of displayed ndn
@@ -135,7 +134,7 @@ public class NegadecimalCalculator {
 			return currentNDN.negDN;			//returns string version to print
 		}
 		// perform arithmetic operations
-		List operators = new ArrayList(5);
+		List <Character> operators = new ArrayList<Character>(5);
 		operators = (Arrays.asList('+','-','*','/','%'));
 		if (operators.contains(operator)) {
 			String secondOperand = cleanUpNumber(restOfInput);
@@ -152,7 +151,7 @@ public class NegadecimalCalculator {
 	
 	public String cleanUpNumber(String someString){
 		String s = someString;
-		s.trim();
+		s = s.trim();
 		while (s.startsWith("0") && (s.length() > 1) ){
 			s = s.substring(1);
 		}

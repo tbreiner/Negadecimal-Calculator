@@ -58,9 +58,9 @@ public class NegadecimalNumber {
 		public NegadecimalNumber divide(NegadecimalNumber ndn) {
 			if (ndn.decnum == 0) {
 				throw new IllegalArgumentException("Cannot divide by zero");
-			}else{
-			NegadecimalNumber x = new NegadecimalNumber(this.decnum / ndn.decnum);
-			return x;
+			}else{	
+				NegadecimalNumber x = new NegadecimalNumber(this.decnum / ndn.decnum);
+				return x;
 			}
 		}
 		public NegadecimalNumber remainder(NegadecimalNumber ndn) {
@@ -77,10 +77,27 @@ public class NegadecimalNumber {
 			return this.decnum;
 			
 		}
-		public boolean equals(NegadecimalNumber ndn) {
-			return (this.decnum == ndn.decnum);
+		/**
+		 * Determines if this NegadecimalNumber equals the other.
+		 * this NegadecimalNumber is equal to other if other is an instance of 	
+		 * NegadecimalNumber and both have equal decimalNumber fields.
+		 * @param other the Object to compare equality with.
+		 * @return true if this NegadecimalNumber is equal to the 
+		 * passed in object, else false.
+		 */
+		@Override
+		public boolean equals(Object other) {
+			//Check if other is an instance of NegadecimalNumber
+			if (!(other instanceof NegadecimalNumber)) {
+				return false;
+			}			
+			//Cast other to a NegadecimalNumber
+			NegadecimalNumber that = (NegadecimalNumber) other;
 			
+			//Check if the decimalNumber fields are equal.
+			return this.decnum == that.decnum;
 		}
+
 		public String toString() {
 			return this.negDN;
 			
