@@ -1,3 +1,7 @@
+/** Theresa Breiner and Sara Weinstein
+ * CIT 591 Homework 9
+ * This file tests our NegadecimalNumber class.
+ */
 package Negadecimal;
 
 import static org.junit.Assert.*;
@@ -110,7 +114,7 @@ public class NegadecimalNumberTest {
 		assertTrue(answer.equals(big.remainder(small))); // big pos, small pos
 		ndn1 = new NegadecimalNumber("1285");
 		ndn2 = new NegadecimalNumber("35");
-		answer = new NegadecimalNumber(0);
+		answer = new NegadecimalNumber("0");
 		assertTrue(answer.equals(ndn1.remainder(ndn2))); // equals 0
 		answer = new NegadecimalNumber(65);
 		assertTrue(answer.equals(small.remainder(big)));	//small pos, big pos
@@ -145,6 +149,8 @@ public class NegadecimalNumberTest {
 		answer = new NegadecimalNumber(345);
 		assertEquals("465", answer.toString());
 	}
+	
+/*Exception Tests*/	
 	
 	@Test(expected = IllegalArgumentException.class) 
 	public void testNegadecimalConstructorWithBadString() {

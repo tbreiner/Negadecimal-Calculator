@@ -1,3 +1,11 @@
+/** Theresa Breiner and Sara Weinstein
+ * CIT 591 Homework 9
+ * This is our class for our Negadecimal objects.
+ * It initializes an object using one of two constructors
+ * and gives several methods that can be applied to each
+ * instance of the object to be used in our Negadecimal
+ * Calculator class.
+ */
 package Negadecimal;
 
 public class NegadecimalNumber {
@@ -29,17 +37,19 @@ public class NegadecimalNumber {
 		public NegadecimalNumber(int n) {
 			decnum = n;
 			int remainder = 0;
-					
-			while (n != 0) {
-				remainder = n % -10;
-				n = n/-10;
-				if (remainder  < 0) {
-					remainder += 10;
-					n += 1;
-				}
-				negDN = Integer.toString(remainder) + negDN;
+			if (n == 0) negDN = "0";
+			else {
+				while (n != 0) {
+					remainder = n % -10;
+					n = n/-10;
+					if (remainder  < 0) {
+						remainder += 10;
+						n += 1;
+					}
+					negDN = Integer.toString(remainder) + negDN;
 				}
 			}
+		}
 		
 		public NegadecimalNumber add(NegadecimalNumber ndn){
 			NegadecimalNumber x = new NegadecimalNumber(this.decnum + ndn.decnum);

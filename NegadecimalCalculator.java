@@ -1,3 +1,9 @@
+/** Theresa Breiner and Sara Weinstein
+ * CIT 591 Homework 9
+ * This is our class for our NegadecimalCalculator.
+ * It uses Negadecimal objects from our class NegadecimalNumber 
+ * to manipulate user input numbers and display calculated values.
+ */
 package Negadecimal;
 
 import java.util.ArrayList;
@@ -11,7 +17,6 @@ public class NegadecimalCalculator {
 	NegadecimalNumber currentNDN = new NegadecimalNumber(0);
 	
 	public static void main(String[] args) {
-		System.out.println((-25) / (-4280));
 		NegadecimalCalculator thisCalculator = new NegadecimalCalculator();
 		thisCalculator.REPL();
 	}
